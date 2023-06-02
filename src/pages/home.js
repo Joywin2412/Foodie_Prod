@@ -7,11 +7,17 @@ import {
   createTheme,
   ThemeProvider,
   styled,
+  AppBar,
+  CssBaseline,
+  Grid,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { DinnerDining } from "@mui/icons-material";
 import CustomAppBar from "./styles.js";
 import DinnerIcon from "./styles2.js";
-
+import Form from "./form.js";
+import Navbar from "./navbar.js";
+import LoadingPage from "./loading.js";
 const Home = () => {
   // let theme = createTheme();
   // theme = responsiveFontSizes(theme);
@@ -19,6 +25,7 @@ const Home = () => {
   theme = createTheme({
     typography: {
       h2: {
+        color: "#ffffff",
         fontFamily: [
           "Poppins",
           "BlinkMacSystemFont",
@@ -44,30 +51,36 @@ const Home = () => {
         },
 
         [theme.breakpoints.up("lg")]: {
-          fontSize: "8vh",
+          fontSize: "10vh",
         },
       },
     },
   });
 
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <CustomAppBar>
+    <ThemeProvider theme={theme}>
+      <Grid>
+        <CustomAppBar sx={{ position: "static" }}>
           <Toolbar>
-            <DinnerIcon />
+            <Grid
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexGrow: 1,
+              }}
+            >
+              <DinnerIcon />
+              <Link to="/" style={{ textDecoration: "none" }}>
+                <Typography variant="h2"> Foodie </Typography>{" "}
+              </Link>
+            </Grid>
 
-            <Typography variant="h2"> Foodie </Typography>
+            <Navbar></Navbar>
           </Toolbar>
         </CustomAppBar>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-      </ThemeProvider>
-    </div>
+        <Form></Form>
+      </Grid>
+    </ThemeProvider>
   );
 };
 

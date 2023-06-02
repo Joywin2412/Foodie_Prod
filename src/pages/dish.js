@@ -7,25 +7,178 @@ import React, {
 } from "react";
 import {
   Typography,
-  CssBaseline,
   Toolbar,
-  AppBar,
-  Container,
   Box,
-  Card,
+  responsiveFontSizes,
+  createTheme,
+  ThemeProvider,
+  styled,
+  Grid,
+  CssBaseline,
 } from "@mui/material";
-import { Button } from "@mui/material";
 import { DinnerDining } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import CustomAppBar from "./styles.js";
+import DinnerIcon from "./styles2.js";
 import { useParams } from "react-router-dom";
 import Navbar from "./navbar.js";
 import axios from "axios";
+import LoadingPage from "./loading.js";
 
 const Home = () => {
+  let theme = createTheme();
+  theme = createTheme({
+    typography: {
+      h2: {
+        color: "#ffffff",
+        fontFamily: [
+          "Poppins",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(","),
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "4vh",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "6vh",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "8vh",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "10vh",
+        },
+      },
+      h3: {
+        color: "#474747",
+        marginBottom: "30px",
+        fontFamily: [
+          "Open Sans",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(","),
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "3vh",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "4vh",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "5vh",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "5vh",
+        },
+      },
+      h4: {
+        marginBottom: "6px",
+        fontFamily: [
+          "Open Sans",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(","),
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "1.9vh",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "2vh",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "2.3vh",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "2.5vh",
+        },
+      },
+      h5: {
+        color: "#9B9B9B",
+        lineHeight: 2,
+        fontFamily: [
+          "Open Sans",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(","),
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "0.6rem",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "0.8rem",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "1rem",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "1rem",
+        },
+        fontWeight: 400,
+      },
+      h7: {
+        color: "#474747",
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "0.8rem",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "1rem",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "1.2rem",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "1.3rem",
+        },
+        fontWeight: 600,
+      },
+    },
+  });
   const id = useParams();
   const [loading, setLoading] = useState(0);
   const [instruction, setInstruction] = useState([]);
   const [nutrition, setNutrition] = useState([]);
   const [ingredient, setIngredient] = useState([]);
+  const [img, setImg] = useState([]);
 
   const fetchData = async () => {
     setLoading(1);
@@ -39,6 +192,7 @@ const Home = () => {
       const d_now = await axios.get(s, requestOptions);
       console.log(d_now.data);
       setInstruction(d_now.data.analyzedInstructions[0].steps);
+      setImg(d_now.data.image);
       // setDishes(d_now.data);
       // setLoading(0);
     } catch (err) {
@@ -54,6 +208,7 @@ const Home = () => {
       const d_now = await axios.get(s, requestOptions);
       console.log(d_now.data);
       setNutrition(d_now.data.bad);
+
       // setInstruction(d_now.data.analyzedInstructions[0].steps);
       // setDishes(d_now.data);
       // setLoading(0);
@@ -82,66 +237,104 @@ const Home = () => {
     fetchData();
   }, []);
 
-  if (loading) return <h1> Loading... </h1>;
+  if (loading) return <LoadingPage></LoadingPage>;
   return (
-    <div>
-      <CssBaseline>
-        <AppBar>
-          <Toolbar>
-            <DinnerDining style={{ height: "70px", width: "70px" }} />
-            <Typography> Foodie </Typography>
-            <Navbar />
-          </Toolbar>
-        </AppBar>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Box sx={{ flexGrow: "1" }}>
+          <Grid>
+            <CustomAppBar sx={{ position: "static" }}>
+              <Toolbar>
+                <Grid
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexGrow: 1,
+                  }}
+                >
+                  <DinnerIcon />
+                  <Link to="/" style={{ textDecoration: "none" }}>
+                    <Typography variant="h2"> Foodie </Typography>{" "}
+                  </Link>
+                </Grid>
 
+                <Navbar></Navbar>
+              </Toolbar>
+            </CustomAppBar>
+          </Grid>
+        </Box>
+        <Grid
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+            margin: "2rem",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={`https://www.tutorialspoint.com/opencv/images/opencv-mini-logo.jpg`}
+            sx={{ maxWidth: "100%", height: "auto" }}
+          ></img>
+          <span>
+            <Typography variant="h3" style={{ textAlign: "left" }}>
+              {" "}
+              Nutrition
+            </Typography>
+            <div style={{ textAlign: "left" }}>
+              {nutrition
+                ? nutrition.map((curr_val, curr_idx, arr) => {
+                    return (
+                      <Typography variant="h4">
+                        {" "}
+                        {curr_val.title} {curr_val.amount}
+                      </Typography>
+                    );
+                  })
+                : ""}
+            </div>
+          </span>
+        </Grid>
         {instruction
           ? instruction.map((curr_val, curr_idx, arr) => {
               return (
-                <p>
+                <Typography variant="h5" style={{ textAlign: "left" }}>
                   {" "}
-                  {curr_val.number}){"  "}
+                  <Typography
+                    variant="h7"
+                    // style={{
+                    //   color: "#474747",
+                    //   fontSize: "vh" + theme.typography.h5.fontSize + 1,
+                    //   fontWeight: "bold",
+                    // }}
+                  >
+                    {curr_val.number}.
+                  </Typography>
+                  {"  "}
                   {curr_val.step}
-                </p>
+                </Typography>
               );
             })
           : ""}
-        <h1> Nutrition</h1>
-        {nutrition
-          ? nutrition.map((curr_val, curr_idx, arr) => {
-              return (
-                <p>
-                  {" "}
-                  {curr_val.title} {curr_val.amount}
-                </p>
-              );
-            })
-          : ""}
-
-        <h1> Ingredient</h1>
+        <Typography variant="h3" style={{ textAlign: "left" }}>
+          {" "}
+          Ingredient
+        </Typography>
         {ingredient
           ? ingredient.map((curr_val, curr_idx, arr) => {
               return (
-                <p>
+                <Typography variant="h4">
                   {curr_val.name}
                   {"   "}
                   {curr_val.amount.metric.value}
                   {"  "}
                   {curr_val.amount.metric.unit}
-                </p>
+                </Typography>
               );
             })
           : ""}
-      </CssBaseline>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

@@ -75,9 +75,9 @@ const CustomAppBar = styled(AppBar)(({ theme }) => {
     //   height: "10vh",
     // },
 
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    // display: "flex",
+    // alignItems: "center",
+    // justifyContent: "center",
   };
 });
 export default CustomAppBar;

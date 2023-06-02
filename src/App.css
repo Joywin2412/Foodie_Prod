@@ -1,4 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Space+Grotesk&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Poppins:wght@500&family=Space+Grotesk&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&family=Open+Sans:wght@500&family=Poppins:wght@500&family=Space+Grotesk&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Leckerli+One&family=Marcellus&family=Open+Sans:wght@500&family=Poppins:wght@500&display=swap");
 .App {
   text-align: center;
 }

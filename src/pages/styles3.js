@@ -7,30 +7,27 @@ import {
   Box,
   styled,
   createTheme,
+  IconButton,
 } from "@mui/material";
-import { DinnerDining } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 // const theme = createTheme();
-const DinnerIcon = styled(DinnerDining)(({ theme }) => {
+const customMenu = styled(Menu)(({ theme }) => {
   return {
     [theme.breakpoints.up("xs")]: {
-      height: "4vh",
-      width: "4vh",
+      fontSize: "4vh",
     },
 
     [theme.breakpoints.up("sm")]: {
-      height: "6vh",
-      width: "6vh",
+      fontSize: "6vh",
     },
 
     [theme.breakpoints.up("md")]: {
-      height: "8vh",
-      width: "8vh",
+      fontSize: "6vh",
     },
 
     [theme.breakpoints.up("lg")]: {
-      height: "10vh",
-      width: "10vh",
+      fontSize: "6vh",
     },
   };
 });
-export default DinnerIcon;
+export default customMenu;
