@@ -37,7 +37,7 @@ const CustomCardMedia = styled(CardMedia)(({ theme }) => {
 const CustomCard = styled(Card)(({ theme }) => {
   return {
     [theme.breakpoints.up("xs")]: {
-      height: "38vh",
+      height: "40vh",
       width: "19vh",
     },
     [theme.breakpoints.up("sm")]: {

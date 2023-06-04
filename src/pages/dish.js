@@ -16,7 +16,7 @@ import {
   Grid,
   CssBaseline,
 } from "@mui/material";
-import { DinnerDining } from "@mui/icons-material";
+import { DinnerDining, WrapText } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import CustomAppBar from "./styles.js";
 import DinnerIcon from "./styles2.js";
@@ -92,6 +92,7 @@ const Home = () => {
       },
       h4: {
         marginBottom: "6px",
+        lineHeight: 2,
         fontFamily: [
           "Open Sans",
           "BlinkMacSystemFont",
@@ -105,15 +106,15 @@ const Home = () => {
           '"Segoe UI Symbol"',
         ].join(","),
         [theme.breakpoints.up("xs")]: {
-          fontSize: "1.9vh",
+          fontSize: "1.5vh",
         },
 
         [theme.breakpoints.up("sm")]: {
-          fontSize: "2vh",
+          fontSize: "1.8vh",
         },
 
         [theme.breakpoints.up("md")]: {
-          fontSize: "2.3vh",
+          fontSize: "2vh",
         },
 
         [theme.breakpoints.up("lg")]: {
@@ -152,6 +153,26 @@ const Home = () => {
         },
         fontWeight: 400,
       },
+      h6: {
+        lineHeight: 2,
+        color: "#474747",
+        [theme.breakpoints.up("xs")]: {
+          fontSize: "0.6rem",
+        },
+
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "0.8rem",
+        },
+
+        [theme.breakpoints.up("md")]: {
+          fontSize: "0.9rem",
+        },
+
+        [theme.breakpoints.up("lg")]: {
+          fontSize: "1rem",
+        },
+        fontWeight: 600,
+      },
       h7: {
         color: "#474747",
         [theme.breakpoints.up("xs")]: {
@@ -176,9 +197,13 @@ const Home = () => {
   const id = useParams();
   const [loading, setLoading] = useState(0);
   const [instruction, setInstruction] = useState([]);
-  const [nutrition, setNutrition] = useState([]);
+  const [nutrition, setNutrition] = useState([
+    { title: "eproagndseates eiownago weoigfawoi", amount: "1mg" },
+  ]);
   const [ingredient, setIngredient] = useState([]);
-  const [img, setImg] = useState([]);
+  const [img, setImg] = useState([
+    "https://www.tutorialspoint.com/opencv/images/opencv-mini-logo.jpg",
+  ]);
 
   const fetchData = async () => {
     setLoading(1);
@@ -234,6 +259,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setLoading(1);
     fetchData();
   }, []);
 
@@ -270,18 +296,32 @@ const Home = () => {
             justifyContent: "space-around",
             margin: "2rem",
             alignItems: "center",
+            flexWrap: "wrap",
           }}
         >
           <img
-            src={`https://www.tutorialspoint.com/opencv/images/opencv-mini-logo.jpg`}
-            sx={{ maxWidth: "100%", height: "auto" }}
+            src={img}
+            style={{
+              width: "100%", // Set the width to 100%
+              height: "auto", // Set the height to auto to maintain aspect ratio
+              maxWidth: "500px",
+            }}
           ></img>
-          <span>
-            <Typography variant="h3" style={{ textAlign: "left" }}>
+          <span style={{ margin: "0.6rem" }}>
+            <Typography
+              variant="h3"
+              style={{ textAlign: "left", paddingLeft: "0" }}
+            >
               {" "}
               Nutrition
             </Typography>
-            <div style={{ textAlign: "left" }}>
+            <div
+              style={{
+                textAlign: "left",
+                borderLeft: "3px solid #40ba37",
+                padding: "15px",
+              }}
+            >
               {nutrition
                 ? nutrition.map((curr_val, curr_idx, arr) => {
                     return (
@@ -316,23 +356,43 @@ const Home = () => {
               );
             })
           : ""}
-        <Typography variant="h3" style={{ textAlign: "left" }}>
+        <Typography
+          variant="h3"
+          style={{
+            textAlign: "left",
+            marginLeft: "1.2rem",
+          }}
+        >
           {" "}
           Ingredient
         </Typography>
-        {ingredient
-          ? ingredient.map((curr_val, curr_idx, arr) => {
-              return (
-                <Typography variant="h4">
-                  {curr_val.name}
-                  {"   "}
-                  {curr_val.amount.metric.value}
-                  {"  "}
-                  {curr_val.amount.metric.unit}
-                </Typography>
-              );
-            })
-          : ""}
+        <Box
+          style={{
+            marginLeft: "1.5rem",
+            borderLeft: "3px solid #40ba37",
+            padding: "15px",
+          }}
+        >
+          {ingredient
+            ? ingredient.map((curr_val, curr_idx, arr) => {
+                return (
+                  <Typography
+                    variant="h6"
+                    style={{
+                      textAlign: "left",
+                      marginLeft: "1.2rem",
+                    }}
+                  >
+                    {curr_val.name}
+                    {"   "}
+                    {curr_val.amount.metric.value}
+                    {"  "}
+                    {curr_val.amount.metric.unit}
+                  </Typography>
+                );
+              })
+            : ""}
+        </Box>
       </div>
     </ThemeProvider>
   );
