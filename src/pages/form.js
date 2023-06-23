@@ -453,7 +453,7 @@ const Home = () => {
                         e.preventDefault();
                         let ingredients2 = [...ingredients];
                         ingredients2 = ingredients2.filter((curr_val2) => {
-                          return curr_val2 != curr_val;
+                          return curr_val2 !== curr_val;
                         });
                         setIngredients(ingredients2);
                       }}

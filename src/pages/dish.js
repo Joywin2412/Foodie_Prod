@@ -195,7 +195,7 @@ const Home = () => {
     },
   });
   const id = useParams();
-  const [loading, setLoading] = useState(0);
+  const [loading, setLoading] = useState(1);
   const [instruction, setInstruction] = useState([]);
   const [nutrition, setNutrition] = useState([
     { title: "eproagndseates eiownago weoigfawoi", amount: "1mg" },
@@ -207,8 +207,6 @@ const Home = () => {
 
   const fetchData = async () => {
     setLoading(1);
-    console.log(id);
-    console.log(`${id}`);
     try {
       let s = `${process.env.REACT_APP_URL}/${id.id}/information?apiKey=${process.env.REACT_APP_API_KEY}`;
       const requestOptions = {

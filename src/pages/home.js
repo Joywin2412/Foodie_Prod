@@ -34,7 +34,6 @@ const Home = () => {
           '"Helvetica Neue"',
           "Arial",
           "sans-serif",
-          '"Apple Color Emoji"',
           '"Segoe UI Emoji"',
           '"Segoe UI Symbol"',
         ].join(","),
