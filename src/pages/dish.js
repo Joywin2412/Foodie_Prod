@@ -25,7 +25,7 @@ import Navbar from "./navbar.js";
 import axios from "axios";
 import LoadingPage from "./loading.js";
 
-const Home = () => {
+const Dish = () => {
   let theme = createTheme();
   theme = createTheme({
     typography: {
@@ -213,9 +213,33 @@ const Home = () => {
         headers: { "Content-Type": "application/json" },
       };
       const d_now = await axios.get(s, requestOptions);
-      console.log(d_now.data);
+      // console.log(d_now)
+      console.log(d_now.data.image);
+      // setInstruction(d_now.data.analyzedInstructions[0].steps);
+      // Current issue is that open cv image is loaded whenever there is no image given with it
+      setImg(
+        d_now.data.image
+      );
+      // setDishes(d_now.data);
+      // setLoading(0);
+    } catch (err) {
+      console.log(err);
+      // setLoading(0);
+    }
+
+    try {
+      let s = `${process.env.REACT_APP_URL}/${id.id}/information?apiKey=${process.env.REACT_APP_API_KEY}`;
+      const requestOptions = {
+        headers: { "Content-Type": "application/json" },
+      };
+      const d_now = await axios.get(s, requestOptions);
+      // console.log(d_now)
+      console.log(d_now.data.image);
       setInstruction(d_now.data.analyzedInstructions[0].steps);
-      setImg(d_now.data.image);
+      // Current issue is that open cv image is loaded whenever there is no image given with it
+      setImg(
+        d_now.data.image
+      );
       // setDishes(d_now.data);
       // setLoading(0);
     } catch (err) {
@@ -322,37 +346,37 @@ const Home = () => {
             >
               {nutrition
                 ? nutrition.map((curr_val, curr_idx, arr) => {
-                    return (
-                      <Typography variant="h4">
-                        {" "}
-                        {curr_val.title} {curr_val.amount}
-                      </Typography>
-                    );
-                  })
+                  return (
+                    <Typography variant="h4">
+                      {" "}
+                      {curr_val.title} {curr_val.amount}
+                    </Typography>
+                  );
+                })
                 : ""}
             </div>
           </span>
         </Grid>
         {instruction
           ? instruction.map((curr_val, curr_idx, arr) => {
-              return (
-                <Typography variant="h5" style={{ textAlign: "left" }}>
-                  {" "}
-                  <Typography
-                    variant="h7"
-                    // style={{
-                    //   color: "#474747",
-                    //   fontSize: "vh" + theme.typography.h5.fontSize + 1,
-                    //   fontWeight: "bold",
-                    // }}
-                  >
-                    {curr_val.number}.
-                  </Typography>
-                  {"  "}
-                  {curr_val.step}
+            return (
+              <Typography variant="h5" style={{ textAlign: "left" }}>
+                {" "}
+                <Typography
+                  variant="h7"
+                // style={{
+                //   color: "#474747",
+                //   fontSize: "vh" + theme.typography.h5.fontSize + 1,
+                //   fontWeight: "bold",
+                // }}
+                >
+                  {curr_val.number}.
                 </Typography>
-              );
-            })
+                {"  "}
+                {curr_val.step}
+              </Typography>
+            );
+          })
           : ""}
         <Typography
           variant="h3"
@@ -373,22 +397,22 @@ const Home = () => {
         >
           {ingredient
             ? ingredient.map((curr_val, curr_idx, arr) => {
-                return (
-                  <Typography
-                    variant="h6"
-                    style={{
-                      textAlign: "left",
-                      marginLeft: "1.2rem",
-                    }}
-                  >
-                    {curr_val.name}
-                    {"   "}
-                    {curr_val.amount.metric.value}
-                    {"  "}
-                    {curr_val.amount.metric.unit}
-                  </Typography>
-                );
-              })
+              return (
+                <Typography
+                  variant="h6"
+                  style={{
+                    textAlign: "left",
+                    marginLeft: "1.2rem",
+                  }}
+                >
+                  {curr_val.name}
+                  {"   "}
+                  {curr_val.amount.metric.value}
+                  {"  "}
+                  {curr_val.amount.metric.unit}
+                </Typography>
+              );
+            })
             : ""}
         </Box>
       </div>
@@ -396,6 +420,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dish;
 
 // Some of them don't have a steps property so see that too
